@@ -15,23 +15,33 @@ MonoBehaviour:
   m_GroupName: Localization-String-Tables-Finnish (fi)
   m_GUID: 2fd2e41d3e8446448804c237594f9f99
   m_SerializeEntries:
+  - m_GUID: 8e277a9ecd572a84493b41e9498b13f5
+    m_Address: SessionScreen_fi
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fi
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a6bbf338f803fa94cabdb569f13e27b5
     m_Address: Buttons_fi
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-fi
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e6c9a7a8838be2e44befe7c7048e4752
     m_Address: WarningPanel_Texts_fi
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-fi
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f07ec2efc4ae8ab47b062efb06676b31
     m_Address: SessionSetup_fi
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-fi
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 2e51a17359daaa54fb049cac529a6c72, type: 2}

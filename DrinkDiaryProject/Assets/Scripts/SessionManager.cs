@@ -11,10 +11,14 @@ public class SessionManager : MonoBehaviour
     public DrinkSession ActiveSession { get; private set; }
     public List<DrinkSession> SessionHistory { get; private set; } = new List<DrinkSession>();
 
+    private MainUIScript mainUIScript;
+
     void Awake()
     {
         LoadHistory();
         LoadActiveSession();
+
+        mainUIScript = FindFirstObjectByType<MainUIScript>();
     }
 
     public void StartNewSession(string sessionName)
@@ -25,6 +29,8 @@ public class SessionManager : MonoBehaviour
             startTime = DateTime.Now
         };
         SaveActiveSession();
+        mainUIScript.isSessionOn = true;
+        PlayerPrefs.SetInt("isSessionOn", 1);
     }
 
     public void AddDrink(DrinkEntry drink)
@@ -47,6 +53,8 @@ public class SessionManager : MonoBehaviour
 
             File.Delete(activeSessionPath); // Clear active session
             ActiveSession = null;
+            mainUIScript.isSessionOn = false;
+            PlayerPrefs.SetInt("isSessionOn", 0);
         }
     }
 

@@ -30,6 +30,10 @@ MonoBehaviour:
     m_Localized: Continue
     m_Metadata:
       m_Items: []
+  - m_Id: 271365406973952
+    m_Localized: Add Drink
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

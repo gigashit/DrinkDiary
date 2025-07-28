@@ -17,6 +17,7 @@ public class MainUIScript : MonoBehaviour
     [SerializeField] private GameObject dimmerPanel;
     [SerializeField] private GameObject sessionSetupPanel;
     [SerializeField] private GameObject warningPanel;
+    [SerializeField] private TMP_Text sessionScreenTitleText;
 
     private string sessionNameInput;
 
@@ -59,10 +60,14 @@ public class MainUIScript : MonoBehaviour
 
     private void OpenSessionScreen()
     {
+        dimmerPanel.SetActive(!isSessionOn);
         warningPanel.SetActive(!isSessionOn);
-
-        dimmerPanel.SetActive(true);
         sessionScreen.SetActive(true);
+
+        if (isSessionOn)
+        {
+            sessionScreenTitleText.text = sessionManager.ActiveSession.sessionName;
+        }
     }
 
     private void CloseWarningPanel()
@@ -76,6 +81,7 @@ public class MainUIScript : MonoBehaviour
     {
         sessionSetupPanel.SetActive(false);
         sessionManager.StartNewSession(sessionNameInput);
+        sessionScreenTitleText.text = sessionNameInput;
         dimmerPanel.SetActive(false);
     }
 
@@ -85,6 +91,8 @@ public class MainUIScript : MonoBehaviour
         sessionSetupPanel.SetActive(false);
         warningPanel.SetActive(false);
         dimmerPanel.SetActive(false);
+
+        sessionScreenTitleText.text = "";
 
         if (isSessionOn)
         {

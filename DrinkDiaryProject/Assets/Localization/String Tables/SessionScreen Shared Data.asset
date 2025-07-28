@@ -10,35 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
-  m_Name: Buttons Shared Data
+  m_Name: SessionScreen Shared Data
   m_EditorClassIdentifier: 
-  m_TableCollectionName: Buttons
-  m_TableCollectionNameGuidString: f48b5984926637541a192c54e272eb08
+  m_TableCollectionName: SessionScreen
+  m_TableCollectionNameGuidString: 21035f68adc24cb46b14b6abb093ff05
   m_Entries:
-  - m_Id: 25395453952
-    m_Key: playbutton_nosession
-    m_Metadata:
-      m_Items: []
-  - m_Id: 636719456256
-    m_Key: playbutton_insession
-    m_Metadata:
-      m_Items: []
-  - m_Id: 791644463104
-    m_Key: warningpanel_button
-    m_Metadata:
-      m_Items: []
-  - m_Id: 271365406973952
-    m_Key: adddrink_button_sessionscreen
+  - m_Id: 14305714176
+    m_Key: drinkselector_title
     m_Metadata:
       m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
-    rid: 4041307285895512358
+    rid: 3505166742117679198
   references:
     version: 2
     RefIds:
-    - rid: 4041307285895512358
+    - rid: 3505166742117679198
       type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
       data:
-        m_CustomEpoch: 1753614175438
+        m_CustomEpoch: 1753680280684
