@@ -11,20 +11,16 @@ public class DrinkManager : MonoBehaviour
     public List<Drink> savedDrinks = new();
 
     private SessionManager sessionManager;
+    private DrinkSelectorUI drinkSelectorUI;
+
+    public bool drinksLoaded = false;
 
     void Awake()
     {
         sessionManager = FindFirstObjectByType<SessionManager>();
+        drinkSelectorUI = FindFirstObjectByType<DrinkSelectorUI>();
 
-        if (Instance == null)
-        {
-            Instance = this;
-            LoadDrinks();
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        LoadDrinks();
     }
 
     public void AddDrink(Drink newDrink)
@@ -38,8 +34,7 @@ public class DrinkManager : MonoBehaviour
         var entry = new DrinkEntry
         {
             drinkName = chosenDrink.name,
-            alcoholUnits = chosenDrink.AlcoholUnits,
-            consumedAt = System.DateTime.Now
+            serving = drinkSelectorUI.GetServingsAmount(chosenDrink.TotalVolumeCl, chosenDrink.AlcoholPercentage)
         };
 
         sessionManager.AddDrink(entry);
@@ -71,6 +66,8 @@ public class DrinkManager : MonoBehaviour
         string json = File.ReadAllText(savePath);
         DrinkListWrapper wrapper = JsonUtility.FromJson<DrinkListWrapper>(json);
         savedDrinks = wrapper.drinks;
+
+        drinksLoaded = true;
     }
 
     [System.Serializable]

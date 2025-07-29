@@ -13,6 +13,8 @@ public class MainUIScript : MonoBehaviour
     [SerializeField] private Button warningPanelButton;
     [SerializeField] private TMP_InputField setupInputField;
     [SerializeField] private Button setupContinueButton;
+    [SerializeField] private Button drinkSelectionButton;
+    [SerializeField] private GameObject drinkSelectionPanel;
     [SerializeField] private GameObject sessionScreen;
     [SerializeField] private GameObject dimmerPanel;
     [SerializeField] private GameObject sessionSetupPanel;
@@ -42,6 +44,17 @@ public class MainUIScript : MonoBehaviour
         warningPanelButton.onClick.AddListener(CloseWarningPanel);
         setupContinueButton.onClick.AddListener(CloseSetupPanel);
         setupInputField.onValueChanged.AddListener(UpdateContinueButtonState);
+        drinkSelectionButton.onClick.AddListener(OpenDrinkSelectionPanel);
+    }
+
+    private void OpenDrinkSelectionPanel()
+    {
+        drinkSelectionPanel.SetActive(true);
+    }
+
+    public void CloseDrinkSelectionPanel()
+    {
+        drinkSelectionPanel.SetActive(false);
     }
 
     private void UpdateContinueButtonState(string text)
@@ -91,6 +104,7 @@ public class MainUIScript : MonoBehaviour
         sessionSetupPanel.SetActive(false);
         warningPanel.SetActive(false);
         dimmerPanel.SetActive(false);
+        drinkSelectionPanel.SetActive(false);
 
         sessionScreenTitleText.text = "";
 

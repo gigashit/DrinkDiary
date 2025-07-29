@@ -46,7 +46,6 @@ public class SessionManager : MonoBehaviour
     {
         if (ActiveSession != null)
         {
-            ActiveSession.endTime = DateTime.Now;
             ActiveSession.notes = optionalNote;
             SessionHistory.Add(ActiveSession);
             SaveHistory();

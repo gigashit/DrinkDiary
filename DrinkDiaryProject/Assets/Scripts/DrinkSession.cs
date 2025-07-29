@@ -7,19 +7,17 @@ public class DrinkSession
 {
     public string sessionName;
     public DateTime startTime;
-    public DateTime? endTime; // Nullable: null = session ongoing
     public List<DrinkEntry> drinks = new List<DrinkEntry>();
     public string notes;
 
-    public bool IsOngoing => endTime == null;
+    public bool IsOngoing;
 }
 
 [System.Serializable]
 public class DrinkEntry
 {
     public string drinkName;
-    public float alcoholUnits; // Or reference to a `Drink` model if you want
-    public DateTime consumedAt;
+    public float serving;
 }
 
 [System.Serializable]
@@ -42,7 +40,13 @@ public class Drink
         {
             float total = 0f;
             foreach (var ingredient in ingredients)
-                total += ingredient.amountCl;
+            {
+                if (ingredient.alcoholPercent > 0)
+                {
+                    total += ingredient.amountCl;
+                }
+            }
+
             return total;
         }
     }
@@ -56,13 +60,13 @@ public class Drink
 
             float alcoholAmount = 0f;
             foreach (var i in ingredients)
+            {
                 alcoholAmount += i.amountCl * (i.alcoholPercent / 100f);
+            }
 
             return (alcoholAmount / totalVolume) * 100f;
         }
     }
-
-    public float AlcoholUnits => TotalVolumeCl * (AlcoholPercentage / 100f);
 }
 
 
