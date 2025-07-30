@@ -19,6 +19,54 @@ MonoBehaviour:
     m_Key: drinkselector_title
     m_Metadata:
       m_Items: []
+  - m_Id: 475139958366208
+    m_Key: drinkselector_noSavedDrinks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 520564325212160
+    m_Key: drinkCreator_Question
+    m_Metadata:
+      m_Items: []
+  - m_Id: 520709758509056
+    m_Key: drinkCreator_step2no
+    m_Metadata:
+      m_Items: []
+  - m_Id: 521626696278016
+    m_Key: drinkCreator_step2yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 725772904947712
+    m_Key: drinkCreator_drinkname
+    m_Metadata:
+      m_Items: []
+  - m_Id: 725811127640064
+    m_Key: drinkCreator_volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 725834204700672
+    m_Key: drinkCreator_percentage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 725862272983040
+    m_Key: drinkCreator_serving
+    m_Metadata:
+      m_Items: []
+  - m_Id: 792490729791488
+    m_Key: sessionscreen_totalservings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 809454990778368
+    m_Key: sessionend_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 809583726551040
+    m_Key: sessionend_historyexplainer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 897158659170304
+    m_Key: sessionend_historyexplainer_nodrinks
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -22,6 +22,55 @@ MonoBehaviour:
     m_Localized: Select a drink to add
     m_Metadata:
       m_Items: []
+  - m_Id: 475139958366208
+    m_Localized: No saved drinks. Add a drink to the list with the button above!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 520564325212160
+    m_Localized: Does the drink include multiple ingredients?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 520709758509056
+    m_Localized: Enter drink details
+    m_Metadata:
+      m_Items: []
+  - m_Id: 521626696278016
+    m_Localized: Enter drink name and ingredients
+    m_Metadata:
+      m_Items: []
+  - m_Id: 725772904947712
+    m_Localized: Drink name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 725811127640064
+    m_Localized: Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 725834204700672
+    m_Localized: Alcohol percentage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 725862272983040
+    m_Localized: Standards
+    m_Metadata:
+      m_Items: []
+  - m_Id: 792490729791488
+    m_Localized: Total Standard Drinks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 809454990778368
+    m_Localized: Are you sure you want to conclude the current party?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 809583726551040
+    m_Localized: The current party will be saved to history for later viewing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 897158659170304
+    m_Localized: '! The current party will not be saved due to having no entries
+      !'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

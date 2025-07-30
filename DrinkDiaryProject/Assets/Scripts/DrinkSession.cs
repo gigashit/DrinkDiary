@@ -6,7 +6,8 @@ using UnityEngine;
 public class DrinkSession
 {
     public string sessionName;
-    public DateTime startTime;
+    public string startTimeString; // store time as string
+    [NonSerialized] public DateTime startTime; // not serialized
     public List<DrinkEntry> drinks = new List<DrinkEntry>();
     public string notes;
 
@@ -18,13 +19,14 @@ public class DrinkEntry
 {
     public string drinkName;
     public float serving;
+    public int orderNumber;
 }
 
 [System.Serializable]
 public class DrinkIngredient
 {
     public string name;
-    public float amountCl;
+    public int amountCl;
     public float alcoholPercent; // 0–100, e.g. 4.7% for beer
 }
 

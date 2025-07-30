@@ -10,22 +10,21 @@ public class DrinkManager : MonoBehaviour
 
     public List<Drink> savedDrinks = new();
 
-    private SessionManager sessionManager;
-    private DrinkSelectorUI drinkSelectorUI;
+    [Header("Script References")]
+    [SerializeField] private SessionManager sessionManager;
+    [SerializeField] private DrinkSelectorUI drinkSelectorUI;
 
     public bool drinksLoaded = false;
 
     void Awake()
     {
-        sessionManager = FindFirstObjectByType<SessionManager>();
-        drinkSelectorUI = FindFirstObjectByType<DrinkSelectorUI>();
-
         LoadDrinks();
     }
 
     public void AddDrink(Drink newDrink)
     {
         savedDrinks.Add(newDrink);
+        Debug.Log("New drink added:" + newDrink.name);
         SaveDrinks();
     }
 
@@ -68,6 +67,14 @@ public class DrinkManager : MonoBehaviour
         savedDrinks = wrapper.drinks;
 
         drinksLoaded = true;
+    }
+
+    public void ClearDrinkData()
+    {
+        if (File.Exists(savePath)) { File.Delete(savePath); }
+        savedDrinks.Clear();
+
+        Debug.Log("Drink data cleared.");
     }
 
     [System.Serializable]

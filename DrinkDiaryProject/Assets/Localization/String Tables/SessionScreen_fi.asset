@@ -22,6 +22,56 @@ MonoBehaviour:
     m_Localized: "Valitse lis\xE4tt\xE4v\xE4 juoma"
     m_Metadata:
       m_Items: []
+  - m_Id: 475139958366208
+    m_Localized: "Ei tallennettuja juomia. Lis\xE4\xE4 juoma luetteloon yll\xE4 olevasta
+      napista!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 520564325212160
+    m_Localized: Koostuuko juoma useasta ainesosasta?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 520709758509056
+    m_Localized: "T\xE4yt\xE4 juoman tiedot"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 521626696278016
+    m_Localized: "Anna juomalle nimi ja lis\xE4\xE4 ainesosat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 725772904947712
+    m_Localized: Juoman nimi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 725811127640064
+    m_Localized: "M\xE4\xE4r\xE4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 725834204700672
+    m_Localized: Alkoholi-prosentti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 725862272983040
+    m_Localized: Annosta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 792490729791488
+    m_Localized: Annoksia juotu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 809454990778368
+    m_Localized: Haluatko varmasti lopettaa nykyiset juhlat?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 809583726551040
+    m_Localized: "Juhlat tallennetaan historiaan my\xF6hemp\xE4\xE4 katselua varten"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 897158659170304
+    m_Localized: "! Juhlia ei tallenneta historiaan ilman lis\xE4ttyj\xE4 juomia
+      !"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

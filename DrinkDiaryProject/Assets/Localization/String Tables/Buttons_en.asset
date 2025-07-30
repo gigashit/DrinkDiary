@@ -34,6 +34,38 @@ MonoBehaviour:
     m_Localized: Add Drink
     m_Metadata:
       m_Items: []
+  - m_Id: 797722062872576
+    m_Localized: Yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 797757202751488
+    m_Localized: No
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1011758201298944
+    m_Localized: Clear Party Data
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1012047939624960
+    m_Localized: Clear Drink Data
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1012384100507648
+    m_Localized: Browse Drinks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1012561322434560
+    m_Localized: Party History
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1087100286918656
+    m_Localized: Conclude
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1096177775796224
+    m_Localized: Conclude Party
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

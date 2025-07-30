@@ -11,14 +11,13 @@ public class SessionManager : MonoBehaviour
     public DrinkSession ActiveSession { get; private set; }
     public List<DrinkSession> SessionHistory { get; private set; } = new List<DrinkSession>();
 
-    private MainUIScript mainUIScript;
+    [Header("Script References")]
+    [SerializeField] private MainUIScript mainUIScript;
 
     void Awake()
     {
         LoadHistory();
         LoadActiveSession();
-
-        mainUIScript = FindFirstObjectByType<MainUIScript>();
     }
 
     public void StartNewSession(string sessionName)
@@ -26,7 +25,8 @@ public class SessionManager : MonoBehaviour
         ActiveSession = new DrinkSession
         {
             sessionName = sessionName,
-            startTime = DateTime.Now
+            startTime = DateTime.Now,
+            startTimeString = DateTime.Now.ToString("o")
         };
         SaveActiveSession();
         mainUIScript.isSessionOn = true;
@@ -37,7 +37,9 @@ public class SessionManager : MonoBehaviour
     {
         if (ActiveSession != null)
         {
+            drink.orderNumber = ActiveSession.drinks.Count + 1;
             ActiveSession.drinks.Add(drink);
+            mainUIScript.UpdateSessionDrinkListUI(ActiveSession.drinks);
             SaveActiveSession();
         }
     }
@@ -46,14 +48,18 @@ public class SessionManager : MonoBehaviour
     {
         if (ActiveSession != null)
         {
-            ActiveSession.notes = optionalNote;
-            SessionHistory.Add(ActiveSession);
-            SaveHistory();
+            if (ActiveSession.drinks.Count > 0)
+            {
+                ActiveSession.notes = optionalNote;
+                SessionHistory.Add(ActiveSession);
+                SaveHistory();
+            }
 
             File.Delete(activeSessionPath); // Clear active session
             ActiveSession = null;
             mainUIScript.isSessionOn = false;
             PlayerPrefs.SetInt("isSessionOn", 0);
+
         }
     }
 
@@ -70,6 +76,13 @@ public class SessionManager : MonoBehaviour
 
         string json = File.ReadAllText(activeSessionPath);
         ActiveSession = JsonUtility.FromJson<DrinkSession>(json);
+
+        if (!string.IsNullOrEmpty(ActiveSession.startTimeString))
+        {
+            ActiveSession.startTime = DateTime.Parse(ActiveSession.startTimeString);
+        }
+
+        mainUIScript.UpdateSessionDrinkListUI(ActiveSession.drinks);
     }
 
     private void SaveHistory()
@@ -85,6 +98,15 @@ public class SessionManager : MonoBehaviour
         string json = File.ReadAllText(sessionHistoryPath);
         SessionListWrapper wrapper = JsonUtility.FromJson<SessionListWrapper>(json);
         SessionHistory = wrapper.sessions;
+    }
+
+    public void ClearSessionData()
+    {
+        if (File.Exists(sessionHistoryPath)) { File.Delete(sessionHistoryPath); }
+        if (File.Exists(activeSessionPath)) { File.Delete(activeSessionPath); }
+        if (PlayerPrefs.HasKey("isSessionOn")) { PlayerPrefs.DeleteKey("isSessionOn"); }
+
+        Debug.Log("Session data cleared");
     }
 
     [Serializable]

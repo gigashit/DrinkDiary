@@ -25,6 +25,11 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aa3e04b681151be4db97a3cbd372a001
+    m_Address: Assets/Localization/String Tables/HistoryScreen Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b04095169cbe7e74da1832304601c3ed
     m_Address: Assets/Localization/String Tables/SessionSetup Shared Data.asset
     m_ReadOnly: 1
@@ -32,6 +37,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f48b5984926637541a192c54e272eb08
     m_Address: Assets/Localization/String Tables/Buttons Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fbbe65ecfb22acc439bbe2dfa33633e9
+    m_Address: Assets/Localization/String Tables/CreationErrors Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

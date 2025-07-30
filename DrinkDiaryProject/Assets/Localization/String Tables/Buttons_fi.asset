@@ -34,6 +34,38 @@ MonoBehaviour:
     m_Localized: "Lis\xE4\xE4 Juoma"
     m_Metadata:
       m_Items: []
+  - m_Id: 797722062872576
+    m_Localized: "Kyll\xE4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 797757202751488
+    m_Localized: Ei
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1011758201298944
+    m_Localized: Poista Juhladata
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1012047939624960
+    m_Localized: Poista juomadata
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1012384100507648
+    m_Localized: Selaa Juomia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1012561322434560
+    m_Localized: Juhlahistoria
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1087100286918656
+    m_Localized: Lopeta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1096177775796224
+    m_Localized: "P\xE4\xE4t\xE4 Juhlat"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

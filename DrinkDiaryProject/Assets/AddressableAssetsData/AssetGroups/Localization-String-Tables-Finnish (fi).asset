@@ -15,6 +15,13 @@ MonoBehaviour:
   m_GroupName: Localization-String-Tables-Finnish (fi)
   m_GUID: 2fd2e41d3e8446448804c237594f9f99
   m_SerializeEntries:
+  - m_GUID: 4ba7eb4f1b32dd04db9e3fab76741d52
+    m_Address: CreationErrors_fi
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fi
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8e277a9ecd572a84493b41e9498b13f5
     m_Address: SessionScreen_fi
     m_ReadOnly: 1
@@ -24,6 +31,13 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a6bbf338f803fa94cabdb569f13e27b5
     m_Address: Buttons_fi
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fi
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c3c252459ec80e14fab8376ec3eae764
+    m_Address: HistoryScreen_fi
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-fi

@@ -3,6 +3,8 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Localization.Settings;
+using UnityEngine.Localization.Tables;
 
 public class DrinkSelectorUI : MonoBehaviour
 {
@@ -17,31 +19,198 @@ public class DrinkSelectorUI : MonoBehaviour
     public TextMeshProUGUI volumeText;
     public TextMeshProUGUI percentText;
     public TextMeshProUGUI servingText;
+    public GameObject drinkCreationPanel;
+    public Button yesButton;
+    public Button noButton;
+    public GameObject step1Object;
+    public Button backFromCreationButton;
+    public TMP_Text creationErrorText;
+
+    [Header("Drink Creation Single Step Elements")]
+    public GameObject step2noObject;
+    public TMP_InputField step2noNameField;
+    public TMP_InputField step2noVolumeField;
+    public TMP_InputField step2noPercentageField;
+    public TMP_Text step2noServingText;
+    public Button step2noAddDrinkButton;
+
+    [Header("Drink Creation Multi Step Elements")]
+    public GameObject step2yesObject;
 
     [Header("Dynamic Sizing")]
     public RectTransform dropdownPanel;           // Panel that will resize
     public int maxVisibleItems = 8;
     public float itemHeight = 140f;                // Match LayoutElement
 
+    [Header("Script References")]
+    [SerializeField] private DrinkManager drinkManager;
+    [SerializeField] private MainUIScript mainUIScript;
+
+    private string tempName;
+    private int tempAmount;
+    private float tempPerc;
 
     private Drink selectedDrink;
 
-    private DrinkManager drinkManager;
-    private MainUIScript mainUIScript;
+    private Drink newCreatedDrink;
+    private Drink lastSelectedDrink;
 
     private const float alcoholDensityValue = 0.06575f;
 
     void Start()
     {
         noSavedDrinksWarning.SetActive(false);
-        selectDrinkButton.onClick.AddListener(ToggleDropdown);
-        addDrinkToSessionButton.onClick.AddListener(AddDrinkToSession);
+        creationErrorText.gameObject.SetActive(false);
+        backFromCreationButton.gameObject.SetActive(false);
+
         dropdownPanelBG.SetActive(false);
         StartCoroutine(DelayedPopulateDropdown());
+        AddButtonListeners();
+        ResetCreationUI();
+    }
 
-        drinkManager = FindFirstObjectByType<DrinkManager>();
-        mainUIScript = FindFirstObjectByType<MainUIScript>();
+    void AddButtonListeners()
+    {
+        selectDrinkButton.onClick.AddListener(ToggleDropdown);
+        addDrinkToSessionButton.onClick.AddListener(AddDrinkToSession);
+        openDrinkCreationButton.onClick.AddListener(OpenCreationPanel);
+        yesButton.onClick.AddListener(OpenStep2YesPanel);
+        noButton.onClick.AddListener(OpenStep2NoPanel);
+        step2noNameField.onValueChanged.AddListener(CheckIfValidValuesStep2No);
+        step2noVolumeField.onValueChanged.AddListener(CheckIfValidValuesStep2No);
+        step2noPercentageField.onValueChanged.AddListener(CheckIfValidValuesStep2No);
+        step2noAddDrinkButton.onClick.AddListener(ConfirmSingleDrink);
+        backFromCreationButton.onClick.AddListener(ReturnFromDrinkSelection);
+    }
 
+    void ReturnFromDrinkSelection()
+    {
+        ResetCreationUI();
+        mainUIScript.CloseDrinkSelectionPanel();
+    }
+
+    public void ResetCreationUI()
+    {
+        step2noServingText.text = "";
+        step2noPercentageField.text = "";
+        step2noVolumeField.text = "";
+        step2noNameField.text = "";
+        step2noObject.SetActive(false);
+
+        step1Object.SetActive(true);
+        drinkCreationPanel.SetActive(false);
+    }
+
+    void ConfirmSingleDrink()
+    {
+        if (CheckIfValidVolume(step2noVolumeField.text) && CheckIfValidPercentage(step2noPercentageField.text))
+        {
+            int parsedVolume = int.Parse(step2noVolumeField.text);
+            string cleanedPercentage = step2noPercentageField.text.Replace(',', '.');
+            float parcedPercentage = float.Parse(cleanedPercentage);
+
+            var ingredient = new DrinkIngredient
+            {
+                name = step2noNameField.text,
+                amountCl = parsedVolume,
+                alcoholPercent = parcedPercentage
+            };
+
+            var drink = new Drink
+            {
+                name = ingredient.name,
+                ingredients = new List<DrinkIngredient>()
+            };
+
+            drink.ingredients.Add(ingredient);
+
+            drinkManager.AddDrink(drink);
+            newCreatedDrink = drink;
+            ResetCreationUI();
+            PopulateDropdown();
+        }
+        else
+        {
+            ShowError(CheckIfValidVolume(step2noVolumeField.text), CheckIfValidPercentage(step2noPercentageField.text));
+        }
+    }
+
+    void ShowError(bool volOK, bool pctOK)
+    {
+        var stringTable = LocalizationSettings
+            .StringDatabase
+            .GetTable("CreationErrors");
+
+        string key;
+        if (!volOK && !pctOK) key = "error_wrongvolandperc";
+        else if (!volOK) key = "error_wrongvol";
+        else /* !pctOK */        key = "error_wrongperc";
+
+        // this will return the localized value for the currently selected locale
+        string localized = stringTable.GetEntry(key).GetLocalizedString();
+        creationErrorText.gameObject.SetActive(true);
+        creationErrorText.text = localized;
+    }
+
+    void CheckIfValidValuesStep2No(string empty)
+    {
+        if (step2noNameField.text == "" || step2noVolumeField.text == "" || step2noPercentageField.text == "")
+        {
+            step2noAddDrinkButton.interactable = false;
+        }
+        else
+        {
+            step2noAddDrinkButton.interactable = true;
+
+            int parsedVolume = int.Parse(step2noVolumeField.text);
+            string cleanedPercentage = step2noPercentageField.text.Replace(',', '.');
+            float parcedPercentage = float.Parse(cleanedPercentage);
+
+            step2noServingText.text = GetServingsAmount((float)parsedVolume, parcedPercentage).ToString();
+        }
+    }
+
+    public bool CheckIfValidVolume(string input)
+    {
+        if (int.TryParse(input, out int number))
+        {
+            return number >= 1 && number <= 999;
+        }
+        return false;
+    }
+
+    public bool CheckIfValidPercentage(string input)
+    {
+        if (float.TryParse(input, System.Globalization.NumberStyles.Float,
+            System.Globalization.CultureInfo.InvariantCulture, out float number))
+        {
+            return number >= 0f && number <= 99.9f;
+        }
+        return false;
+    }
+
+    void OpenCreationPanel()
+    {
+        step2noObject.SetActive(false);
+        step2yesObject.SetActive(false);
+
+        drinkCreationPanel.SetActive(true);
+        step1Object.SetActive(true);
+        backFromCreationButton.gameObject.SetActive(true);
+    }
+
+    void OpenStep2NoPanel()
+    {
+        step1Object.SetActive(false);
+        step2noObject.SetActive(true);
+
+        CheckIfValidValuesStep2No(null);
+    }
+
+    void OpenStep2YesPanel()
+    {
+        step1Object.SetActive(false);
+        step2yesObject.SetActive(true);
     }
 
     void ToggleDropdown()
@@ -51,16 +220,24 @@ public class DrinkSelectorUI : MonoBehaviour
 
     void PopulateDropdown()
     {
+        Debug.Log("Populating dropdown menu...");
+
         if (drinkManager.savedDrinks.Count == 0)
         {
+            Debug.Log("No saved drinks detected");
             selectDrinkButton.gameObject.SetActive(false);
             noSavedDrinksWarning.SetActive(true);
             return;
         }
+        else
+        {
+            selectDrinkButton.gameObject.SetActive(true);
+            noSavedDrinksWarning.SetActive(false);
+        }
 
-        // Clear old buttons
-        foreach (Transform child in dropdownContentParent)
-            Destroy(child.gameObject);
+            // Clear old buttons
+            foreach (Transform child in dropdownContentParent)
+                Destroy(child.gameObject);
 
         List<Drink> drinks = drinkManager.GetDrinksSortedAlphabetically();
 
@@ -77,17 +254,33 @@ public class DrinkSelectorUI : MonoBehaviour
             });
         }
 
-        // Optionally auto-select the first drink
-        SelectDrink(drinks[0]);
+        if (newCreatedDrink != null)
+        {
+            SelectDrink(newCreatedDrink);
+            newCreatedDrink = null;
+        }
+        else if (lastSelectedDrink != null)
+        {
+            SelectDrink(lastSelectedDrink);
+        }
+        else
+        {
+            SelectDrink(drinks[0]);
+        }
 
         ResizeDropdown(drinks.Count);
     }
 
     private IEnumerator DelayedPopulateDropdown()
     {
-        while (!drinkManager.drinksLoaded)
+        yield return new WaitForSeconds(0.5f);
+
+        if (drinkManager.savedDrinks.Count > 0)
         {
-            yield return new WaitForSeconds(0.5f);
+            while (!drinkManager.drinksLoaded)
+            {
+                yield return new WaitForSeconds(0.5f);
+            }
         }
 
         PopulateDropdown();
@@ -135,6 +328,7 @@ public class DrinkSelectorUI : MonoBehaviour
     void AddDrinkToSession()
     {
         drinkManager.AddDrinkToSession(selectedDrink);
+        lastSelectedDrink = selectedDrink;
         mainUIScript.CloseDrinkSelectionPanel();
     }
 

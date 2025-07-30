@@ -31,6 +31,38 @@ MonoBehaviour:
     m_Key: adddrink_button_sessionscreen
     m_Metadata:
       m_Items: []
+  - m_Id: 797722062872576
+    m_Key: yesButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 797757202751488
+    m_Key: noButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1011758201298944
+    m_Key: deleteSessionDataButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1012047939624960
+    m_Key: deleteDrinkDataButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1012384100507648
+    m_Key: browseDrinksButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1012561322434560
+    m_Key: sessionHistoryButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1087100286918656
+    m_Key: concludebutton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1096177775796224
+    m_Key: concludeMenuButton
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
