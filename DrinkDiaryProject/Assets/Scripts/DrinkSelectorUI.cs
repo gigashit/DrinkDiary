@@ -9,6 +9,7 @@ using UnityEngine.Localization.Tables;
 public class DrinkSelectorUI : MonoBehaviour
 {
     [Header("UI References")]
+    public Button backFromDrinkSelectionButton;
     public Button selectDrinkButton;
     public Button openDrinkCreationButton;
     public Button addDrinkToSessionButton;
@@ -82,6 +83,7 @@ public class DrinkSelectorUI : MonoBehaviour
         step2noPercentageField.onValueChanged.AddListener(CheckIfValidValuesStep2No);
         step2noAddDrinkButton.onClick.AddListener(ConfirmSingleDrink);
         backFromCreationButton.onClick.AddListener(ReturnFromDrinkSelection);
+        backFromDrinkSelectionButton.onClick.AddListener(mainUIScript.CloseDrinkSelectionPanel);
 
         Button dropDownPanelBGButton = dropdownPanelBG.GetComponent<Button>();
         dropDownPanelBGButton.onClick.AddListener(ToggleDropdown);
