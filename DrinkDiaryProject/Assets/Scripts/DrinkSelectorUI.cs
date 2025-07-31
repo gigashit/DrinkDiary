@@ -49,6 +49,7 @@ public class DrinkSelectorUI : MonoBehaviour
     private string tempName;
     private int tempAmount;
     private float tempPerc;
+    private bool dropdownOpen = false;
 
     private Drink selectedDrink;
 
@@ -81,6 +82,9 @@ public class DrinkSelectorUI : MonoBehaviour
         step2noPercentageField.onValueChanged.AddListener(CheckIfValidValuesStep2No);
         step2noAddDrinkButton.onClick.AddListener(ConfirmSingleDrink);
         backFromCreationButton.onClick.AddListener(ReturnFromDrinkSelection);
+
+        Button dropDownPanelBGButton = dropdownPanelBG.GetComponent<Button>();
+        dropDownPanelBGButton.onClick.AddListener(ToggleDropdown);
     }
 
     void ReturnFromDrinkSelection()
@@ -103,10 +107,12 @@ public class DrinkSelectorUI : MonoBehaviour
 
     void ConfirmSingleDrink()
     {
-        if (CheckIfValidVolume(step2noVolumeField.text) && CheckIfValidPercentage(step2noPercentageField.text))
+        string cleadedVolume = step2noVolumeField.text.Replace(',', '.');
+        string cleanedPercentage = step2noPercentageField.text.Replace(',', '.');
+
+        if (CheckIfValidVolume(cleadedVolume) && CheckIfValidPercentage(cleanedPercentage))
         {
             int parsedVolume = int.Parse(step2noVolumeField.text);
-            string cleanedPercentage = step2noPercentageField.text.Replace(',', '.');
             float parcedPercentage = float.Parse(cleanedPercentage);
 
             var ingredient = new DrinkIngredient
@@ -128,10 +134,11 @@ public class DrinkSelectorUI : MonoBehaviour
             newCreatedDrink = drink;
             ResetCreationUI();
             PopulateDropdown();
+            creationErrorText.gameObject.SetActive(false);
         }
         else
         {
-            ShowError(CheckIfValidVolume(step2noVolumeField.text), CheckIfValidPercentage(step2noPercentageField.text));
+            ShowError(CheckIfValidVolume(cleadedVolume), CheckIfValidPercentage(cleanedPercentage));
         }
     }
 
@@ -215,7 +222,9 @@ public class DrinkSelectorUI : MonoBehaviour
 
     void ToggleDropdown()
     {
-        dropdownPanelBG.SetActive(!dropdownPanelBG.activeSelf);
+        dropdownPanelBG.SetActive(!dropdownOpen);
+        dropdownOpen = !dropdownOpen;
+        Debug.Log("Toggling dropdown... Dropdown is now " + dropdownOpen);
     }
 
     void PopulateDropdown()
@@ -250,22 +259,22 @@ public class DrinkSelectorUI : MonoBehaviour
             Button btn = buttonObj.GetComponent<Button>();
             btn.onClick.AddListener(() =>
             {
-                SelectDrink(drink);
+                SelectDrink(drink, false);
             });
         }
 
         if (newCreatedDrink != null)
         {
-            SelectDrink(newCreatedDrink);
+            SelectDrink(newCreatedDrink, true);
             newCreatedDrink = null;
         }
         else if (lastSelectedDrink != null)
         {
-            SelectDrink(lastSelectedDrink);
+            SelectDrink(lastSelectedDrink, true);
         }
         else
         {
-            SelectDrink(drinks[0]);
+            SelectDrink(drinks[0], true);
         }
 
         ResizeDropdown(drinks.Count);
@@ -310,7 +319,7 @@ public class DrinkSelectorUI : MonoBehaviour
     }
 
 
-    void SelectDrink(Drink drink)
+    void SelectDrink(Drink drink, bool isAutomatic)
     {
         selectedDrink = drink;
 
@@ -322,7 +331,10 @@ public class DrinkSelectorUI : MonoBehaviour
         percentText.text = drink.AlcoholPercentage.ToString();
         servingText.text = GetServingsAmount(drink.TotalVolumeCl, drink.AlcoholPercentage).ToString();
 
-        dropdownPanelBG.SetActive(false);
+        if (!isAutomatic)
+        {
+            ToggleDropdown();
+        }
     }
 
     void AddDrinkToSession()

@@ -46,6 +46,13 @@ public class MainUIScript : MonoBehaviour
     [SerializeField] private Button finalizeConclusionButton;
     [SerializeField] private Button backFromConcludePanelButton;
 
+    [Header("History Panel References")]
+    [SerializeField] private Button openHistoryPanelButton;
+    [SerializeField] private GameObject historyPanel;
+    [SerializeField] private Transform historyContent;
+    [SerializeField] private GameObject historyEntryPrefab;
+    [SerializeField] private Button backFromHistoryPanelButton;
+
     [Header("Prefabs")]
     [SerializeField] private GameObject sessionDrinkEntryPrefab;
 
@@ -79,6 +86,20 @@ public class MainUIScript : MonoBehaviour
         concludeSessionFromSessionScreenButton.onClick.AddListener(OpenConclusionScreen);
         finalizeConclusionButton.onClick.AddListener(ConcludeSession);
         backFromConcludePanelButton.onClick.AddListener(CancelConclusion);
+        openHistoryPanelButton.onClick.AddListener(OpenHistoryPanel);
+        backFromHistoryPanelButton.onClick.AddListener(CloseHistoryPanel);
+    }
+
+    void OpenHistoryPanel()
+    {
+        dimmerPanel.SetActive(true);
+        historyPanel.SetActive(true);
+    }
+
+    void CloseHistoryPanel()
+    {
+        dimmerPanel.SetActive(false);
+        historyPanel.SetActive(false);
     }
 
     void OpenConclusionScreen()
@@ -132,6 +153,29 @@ public class MainUIScript : MonoBehaviour
         }
 
         UpdateTotalServingsNumber(drinkList);
+    }
+
+    public void UpdateHistoryListUI()
+    {
+        foreach (Transform child in historyContent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        List<DrinkSession> drinkSessions = sessionManager.SessionHistory;
+
+        if (drinkSessions != null && drinkSessions.Count > 0)
+        {
+            foreach (DrinkSession session in drinkSessions)
+            {
+                GameObject prefab = Instantiate(historyEntryPrefab, historyContent);
+                prefab.transform.SetSiblingIndex(0);
+                HistoryEntry script = prefab.GetComponent<HistoryEntry>();
+                script.Setup(session, FormatDateWithSuffix(session.startTime));
+            }
+        }
+
+
     }
 
     private void UpdateTotalServingsNumber(List<DrinkEntry> drinkList)
@@ -219,6 +263,7 @@ public class MainUIScript : MonoBehaviour
         dimmerPanel.SetActive(false);
         drinkSelectionPanel.SetActive(false);
         concludeSessionPanel.SetActive(false);
+        historyPanel.SetActive(false);
 
         sessionScreenTitleText.text = "";
         sessionTitleDateText.text = "";

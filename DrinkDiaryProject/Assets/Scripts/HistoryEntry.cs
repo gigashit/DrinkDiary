@@ -11,7 +11,7 @@ public class HistoryEntry : MonoBehaviour
     [SerializeField] private TMP_Text servingsAmount;
     [SerializeField] private TMP_Text favoriteDrinkText;
 
-    public MainUIScript mainUIScript;
+    [HideInInspector] public MainUIScript mainUIScript;
 
     public void Setup(DrinkSession session, string formattedDate)
     {
@@ -27,12 +27,12 @@ public class HistoryEntry : MonoBehaviour
 
         servingsAmount.text = totalServings.ToString();
 
-        favoriteDrinkText.text = GetFavoriteDrink(session.drinks).drinkName;
+        favoriteDrinkText.text = GetFavoriteDrink(session.drinks);
     }
 
     private static System.Random random = new System.Random();
 
-    private DrinkEntry GetFavoriteDrink(List<DrinkEntry> list)
+    private string GetFavoriteDrink(List<DrinkEntry> list)
     {
         var nameGroups = list
             .GroupBy(x => x.drinkName)
@@ -48,6 +48,7 @@ public class HistoryEntry : MonoBehaviour
 
         string selectedName = topNames[random.Next(topNames.Count)];
 
-        return list.First(z => z.drinkName == selectedName);
+        Debug.Log("Favorite Drink = " + selectedName);
+        return selectedName;
     }
 }

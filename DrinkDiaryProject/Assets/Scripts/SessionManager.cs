@@ -89,6 +89,7 @@ public class SessionManager : MonoBehaviour
     {
         string json = JsonUtility.ToJson(new SessionListWrapper(SessionHistory));
         File.WriteAllText(sessionHistoryPath, json);
+        mainUIScript.UpdateHistoryListUI();
     }
 
     private void LoadHistory()
@@ -98,6 +99,16 @@ public class SessionManager : MonoBehaviour
         string json = File.ReadAllText(sessionHistoryPath);
         SessionListWrapper wrapper = JsonUtility.FromJson<SessionListWrapper>(json);
         SessionHistory = wrapper.sessions;
+
+        foreach (var session in SessionHistory)
+        {
+            if (!string.IsNullOrEmpty(session.startTimeString))
+            {
+                session.startTime = DateTime.Parse(session.startTimeString);
+            }
+        }
+
+        mainUIScript.UpdateHistoryListUI();
     }
 
     public void ClearSessionData()
