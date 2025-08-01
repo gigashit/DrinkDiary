@@ -37,6 +37,14 @@ public class DrinkSelectorUI : MonoBehaviour
 
     [Header("Drink Creation Multi Step Elements")]
     public GameObject step2yesObject;
+    public TMP_InputField step2yesNameField;
+    public TMP_Text step2yesTotalVolume;
+    public TMP_Text step2yesTotalPercentage;
+    public TMP_Text step2yesTotalServingsText;
+    public Button step2yesAddDrinkButton;
+    public Button addIngredientButton;
+    public Transform ingredientContent;
+    public GameObject ingredientEntryPrefab;
 
     [Header("Dynamic Sizing")]
     public RectTransform dropdownPanel;           // Panel that will resize
@@ -79,14 +87,87 @@ public class DrinkSelectorUI : MonoBehaviour
         yesButton.onClick.AddListener(OpenStep2YesPanel);
         noButton.onClick.AddListener(OpenStep2NoPanel);
         step2noNameField.onValueChanged.AddListener(CheckIfValidValuesStep2No);
+        step2yesNameField.onValueChanged.AddListener(CheckIfValidValuesStep2Yes);
         step2noVolumeField.onValueChanged.AddListener(CheckIfValidValuesStep2No);
         step2noPercentageField.onValueChanged.AddListener(CheckIfValidValuesStep2No);
         step2noAddDrinkButton.onClick.AddListener(ConfirmSingleDrink);
         backFromCreationButton.onClick.AddListener(ReturnFromDrinkSelection);
         backFromDrinkSelectionButton.onClick.AddListener(mainUIScript.CloseDrinkSelectionPanel);
+        addIngredientButton.onClick.AddListener(AddIngredientEntry);
+        step2yesAddDrinkButton.onClick.AddListener(ConfirmMultiDrink);
 
         Button dropDownPanelBGButton = dropdownPanelBG.GetComponent<Button>();
         dropDownPanelBGButton.onClick.AddListener(ToggleDropdown);
+    }
+
+    void AddIngredientEntry()
+    {
+        GameObject entry = Instantiate(ingredientEntryPrefab, ingredientContent);
+        entry.transform.SetSiblingIndex(0);
+        IngredientEntry script = entry.GetComponent<IngredientEntry>();
+        script.mainUIScript = mainUIScript;
+        script.drinkSelectorUI = this;
+    }
+
+    public void RemoveIngredientEntry(GameObject entry)
+    {
+        Destroy(entry.gameObject);
+        Invoke(nameof(DelayedUpdate), 0.1f);
+    }
+
+    void DelayedUpdate()
+    {
+        UpdateTotalAmount();
+        UpdateTotalPercentage();
+    }
+
+    public void UpdateTotalAmount()
+    {
+        int volume = 0;
+
+        foreach (Transform child in ingredientContent)
+        {
+            if (child.name != "IngredientAddingPanel")
+            {
+                IngredientEntry script = child.GetComponent<IngredientEntry>();
+                volume += int.Parse(script.storedVolume);
+            }
+        }
+
+        step2yesTotalVolume.text = volume.ToString();
+        tempAmount = volume;
+
+        UpdateTotalServings();
+    }
+
+    public void UpdateTotalPercentage()
+    {
+        float totalAlcoholAmount = 0f;
+        int totalVolume = 0;
+
+        foreach (Transform child in ingredientContent)
+        {
+            if (child.name != "IngredientAddingPanel")
+            {
+                IngredientEntry script = child.GetComponent<IngredientEntry>();
+                int volume = int.Parse(script.storedVolume);
+                totalVolume += volume;
+                float percentage = float.Parse(script.storedPercentage);
+                totalAlcoholAmount += volume * (percentage / 100f);
+            }
+        }
+
+        float totalPercentage = Mathf.Round(totalAlcoholAmount / totalVolume * 1000f) * 0.1f;
+        step2yesTotalPercentage.text = totalPercentage.ToString();
+        tempPerc = totalPercentage;
+
+        UpdateTotalServings();
+    }
+
+    void UpdateTotalServings()
+    {
+        step2yesTotalServingsText.text = GetServingsAmount(tempAmount, tempPerc).ToString();
+        CheckIfValidValuesStep2Yes(null);
     }
 
     void ReturnFromDrinkSelection()
@@ -103,9 +184,28 @@ public class DrinkSelectorUI : MonoBehaviour
         step2noNameField.text = "";
         step2noObject.SetActive(false);
 
+        step2yesNameField.text = "";
+        step2yesTotalVolume.text = "";
+        step2yesTotalPercentage.text = "";
+        step2yesTotalServingsText.text = "";
+
+        tempName = "";
+        tempAmount = 0;
+        tempPerc = 0;
+
+        foreach(Transform entry in ingredientContent)
+        {
+            if (entry.name != "IngredientAddingPanel")
+            {
+                Destroy(entry.gameObject);
+            }
+        }
+
         step1Object.SetActive(true);
         drinkCreationPanel.SetActive(false);
     }
+
+
 
     void ConfirmSingleDrink()
     {
@@ -140,11 +240,52 @@ public class DrinkSelectorUI : MonoBehaviour
         }
         else
         {
-            ShowError(CheckIfValidVolume(cleadedVolume), CheckIfValidPercentage(cleanedPercentage));
+            ShowError(CheckIfValidVolume(cleadedVolume), CheckIfValidPercentage(cleanedPercentage), true);
         }
     }
 
-    void ShowError(bool volOK, bool pctOK)
+    void ConfirmMultiDrink()
+    {
+        List<DrinkIngredient> tempIngredients = new List<DrinkIngredient>();
+
+        foreach (Transform entry in ingredientContent)
+        {
+            if (entry.name != "IngredientAddingPanel")
+            {
+                IngredientEntry script = entry.GetComponent<IngredientEntry>();
+                
+                if (!script.isValid)
+                {
+                    switch (script.errorMessage)
+                    {
+                        case ingredientErrorMessage.EmptyFields:
+                            ShowError(true, true, false); break;
+                        case ingredientErrorMessage.InvalidValues:
+                            ShowError(true, true, true); break;
+                        default: Debug.LogError("Unknown error message in confirming multi-drink"); break;
+                    }
+
+                    return;
+                }
+
+                tempIngredients.Add(script.thisIngredient);
+            }
+        }
+
+        var drink = new Drink
+        {
+            name = tempName,
+            ingredients = tempIngredients
+        };
+
+        drinkManager.AddDrink(drink);
+        newCreatedDrink = drink;
+        ResetCreationUI();
+        PopulateDropdown();
+        creationErrorText.gameObject.SetActive(false);
+    }
+
+    void ShowError(bool volOK, bool pctOK, bool notEmpty)
     {
         var stringTable = LocalizationSettings
             .StringDatabase
@@ -153,10 +294,12 @@ public class DrinkSelectorUI : MonoBehaviour
         string key;
         if (!volOK && !pctOK) key = "error_wrongvolandperc";
         else if (!volOK) key = "error_wrongvol";
-        else /* !pctOK */        key = "error_wrongperc";
+        else if (!pctOK) key = "error_wrongperc";
+        else if (!notEmpty) key = "error_emptyfields";
+        else key = "error_invalidfields";
 
-        // this will return the localized value for the currently selected locale
-        string localized = stringTable.GetEntry(key).GetLocalizedString();
+            // this will return the localized value for the currently selected locale
+            string localized = stringTable.GetEntry(key).GetLocalizedString();
         creationErrorText.gameObject.SetActive(true);
         creationErrorText.text = localized;
     }
@@ -176,6 +319,20 @@ public class DrinkSelectorUI : MonoBehaviour
             float parcedPercentage = float.Parse(cleanedPercentage);
 
             step2noServingText.text = GetServingsAmount((float)parsedVolume, parcedPercentage).ToString();
+        }
+    }
+
+    void CheckIfValidValuesStep2Yes(string empty)
+    {
+        tempName = step2yesNameField.text;
+
+        if (tempName == "" || tempAmount == 0)
+        {
+            step2yesAddDrinkButton.interactable = false;
+        }
+        else
+        {
+            step2yesAddDrinkButton.interactable = true;
         }
     }
 

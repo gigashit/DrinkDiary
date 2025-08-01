@@ -27,6 +27,14 @@ MonoBehaviour:
     m_Key: error_wrongvolandperc
     m_Metadata:
       m_Items: []
+  - m_Id: 948063316205568
+    m_Key: error_emptyfields
+    m_Metadata:
+      m_Items: []
+  - m_Id: 948329985859584
+    m_Key: error_invalidfields
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -30,6 +30,14 @@ MonoBehaviour:
     m_Localized: Invalid volume and alcohol percentage inputs!
     m_Metadata:
       m_Items: []
+  - m_Id: 948063316205568
+    m_Localized: One or multiple ingredient value fields is empty!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 948329985859584
+    m_Localized: One or multiple ingredient value inputs are invalid!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

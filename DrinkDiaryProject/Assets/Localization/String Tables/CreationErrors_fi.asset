@@ -30,6 +30,14 @@ MonoBehaviour:
     m_Localized: "M\xE4\xE4r\xE4 sek\xE4 alkoholiprosentti v\xE4\xE4r\xE4ss\xE4 muodossa!"
     m_Metadata:
       m_Items: []
+  - m_Id: 948063316205568
+    m_Localized: "Yhden tai useamman ainesosan tietokentti\xE4 on tyhj\xE4n\xE4!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 948329985859584
+    m_Localized: "Yhden tai useamman ainesosan tietoja on v\xE4\xE4r\xE4ss\xE4 muodossa!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

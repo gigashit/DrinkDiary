@@ -43,10 +43,7 @@ public class Drink
             float total = 0f;
             foreach (var ingredient in ingredients)
             {
-                if (ingredient.alcoholPercent > 0)
-                {
-                    total += ingredient.amountCl;
-                }
+               total += ingredient.amountCl;
             }
 
             return total;
@@ -66,7 +63,7 @@ public class Drink
                 alcoholAmount += i.amountCl * (i.alcoholPercent / 100f);
             }
 
-            return (alcoholAmount / totalVolume) * 100f;
+            return Mathf.Round((alcoholAmount / totalVolume) * 1000f) * 0.1f;
         }
     }
 }
