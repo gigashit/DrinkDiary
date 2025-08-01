@@ -71,6 +71,10 @@ MonoBehaviour:
       !'
     m_Metadata:
       m_Items: []
+  - m_Id: 1609732593803264
+    m_Localized: Ingredient name
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

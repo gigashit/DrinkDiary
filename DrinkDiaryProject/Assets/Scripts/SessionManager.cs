@@ -13,6 +13,7 @@ public class SessionManager : MonoBehaviour
 
     [Header("Script References")]
     [SerializeField] private MainUIScript mainUIScript;
+    [SerializeField] private XPSystem xpSystem;
 
     void Awake()
     {
@@ -40,6 +41,7 @@ public class SessionManager : MonoBehaviour
             drink.orderNumber = ActiveSession.drinks.Count + 1;
             ActiveSession.drinks.Add(drink);
             mainUIScript.UpdateSessionDrinkListUI(ActiveSession.drinks);
+            xpSystem.UpdateXPNumber();
             SaveActiveSession();
         }
     }
@@ -109,6 +111,12 @@ public class SessionManager : MonoBehaviour
         }
 
         mainUIScript.UpdateHistoryListUI();
+        Invoke(nameof(DelayedLevelUpdate), 0.2f);
+    }
+
+    void DelayedLevelUpdate()
+    {
+        xpSystem.UpdateXPNumber();
     }
 
     public void ClearSessionData()

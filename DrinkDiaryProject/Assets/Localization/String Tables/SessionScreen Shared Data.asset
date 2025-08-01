@@ -67,6 +67,10 @@ MonoBehaviour:
     m_Key: sessionend_historyexplainer_nodrinks
     m_Metadata:
       m_Items: []
+  - m_Id: 1609732593803264
+    m_Key: drinkcreation_ingredientname
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -1,11 +1,13 @@
 using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Settings;
 using UnityEngine.Localization.Tables;
+using UnityEngine.UI;
 
 public class MainUIScript : MonoBehaviour
 {
@@ -36,6 +38,8 @@ public class MainUIScript : MonoBehaviour
     [SerializeField] private TMP_Text totalSessionServingsText;
     [SerializeField] private TMP_Text setupDateNowText;
     [SerializeField] private TMP_Text sessionTitleDateText;
+    [SerializeField] private Button fiLanguageButton;
+    [SerializeField] private Button usLanguageButton;
 
     [Header("Conclude Panel UI")]
     [SerializeField] private GameObject concludeSessionPanel;
@@ -59,6 +63,7 @@ public class MainUIScript : MonoBehaviour
     [Header("Script References")]
     [SerializeField] private SessionManager sessionManager;
     [SerializeField] private DrinkManager drinkManager;
+    [SerializeField] private XPSystem xpSystem;
 
     [Header("Colors")]
     [SerializeField] private Color latestColor;
@@ -70,6 +75,8 @@ public class MainUIScript : MonoBehaviour
         LoadSessionData();
         SetupMainUI();
         SetupButtons();
+
+        StartCoroutine(loadLanguage());
     }
 
     private void SetupButtons()
@@ -88,6 +95,39 @@ public class MainUIScript : MonoBehaviour
         backFromConcludePanelButton.onClick.AddListener(CancelConclusion);
         openHistoryPanelButton.onClick.AddListener(OpenHistoryPanel);
         backFromHistoryPanelButton.onClick.AddListener(CloseHistoryPanel);
+        fiLanguageButton.onClick.AddListener(() => SetLanguage("fi"));
+        usLanguageButton.onClick.AddListener(() => SetLanguage("en"));
+    }
+
+    private IEnumerator loadLanguage()
+    {
+        yield return LocalizationSettings.InitializationOperation;
+
+        if (PlayerPrefs.HasKey("SavedLanguage"))
+        {
+            var availableLocales = LocalizationSettings.AvailableLocales.Locales;
+
+            foreach (var locale in availableLocales)
+            {
+                if (locale.Identifier.Code == PlayerPrefs.GetString("SavedLanguage"))
+                {
+                    LocalizationSettings.SelectedLocale = locale;
+
+                    yield return null;
+
+                    ChangePlayButtonLabel(isSessionOn);
+                }
+            }
+        }
+
+        if (LocalizationSettings.SelectedLocale.Identifier.Code == "fi")
+        {
+            fiLanguageButton.interactable = false;
+        }
+        else
+        {
+            usLanguageButton.interactable = false;
+        }
     }
 
     void OpenHistoryPanel()
@@ -278,7 +318,7 @@ public class MainUIScript : MonoBehaviour
             totalSessionServingsText.text = "0";
         }
 
-            ChangePlayButtonLabel(isSessionOn);
+        ChangePlayButtonLabel(isSessionOn);
         inSessionInfo.SetActive(isSessionOn);
     }
 
@@ -354,6 +394,45 @@ public class MainUIScript : MonoBehaviour
         else
         {
             isSessionOn = false;
+        }
+    }
+
+    void SetLanguage(string localeCode)
+    {
+        StartCoroutine(SwitchLocale(localeCode));
+
+        if (localeCode == "fi")
+        {
+            usLanguageButton.interactable = true;
+            fiLanguageButton.interactable = false;
+        }
+        else
+        {
+            usLanguageButton.interactable = false;
+            fiLanguageButton.interactable = true;
+        }
+    }
+
+    private System.Collections.IEnumerator SwitchLocale(string localeCode)
+    {
+        yield return LocalizationSettings.InitializationOperation;
+
+        var availableLocales = LocalizationSettings.AvailableLocales.Locales;
+
+        foreach (var locale in availableLocales)
+        {
+            if (locale.Identifier.Code == localeCode)
+            {
+                LocalizationSettings.SelectedLocale = locale;
+
+                yield return null;
+
+                ChangePlayButtonLabel(isSessionOn);
+                xpSystem.UpdateXPNumber();
+
+                PlayerPrefs.SetString("SavedLanguage", localeCode);
+                yield break;
+            }
         }
     }
 }

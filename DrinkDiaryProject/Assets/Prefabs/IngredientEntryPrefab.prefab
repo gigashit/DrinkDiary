@@ -859,6 +859,7 @@ GameObject:
   - component: {fileID: 8168263747198373527}
   - component: {fileID: 3887848686098952925}
   - component: {fileID: 3357333882385188691}
+  - component: {fileID: 720266754124775394}
   m_Layer: 5
   m_Name: NameField
   m_TagString: Untagged
@@ -1025,6 +1026,21 @@ MonoBehaviour:
   isAlert: 0
   m_InputValidator: {fileID: 0}
   m_ShouldActivateOnSelect: 1
+--- !u!114 &720266754124775394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4430046255681592561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cae6c1ff04ba984f8f417d4966d1230, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floatingCanvasTarget: {fileID: 0}
+  dimmerPanel: {fileID: 0}
+  floatingPosition: {x: 0, y: 0}
 --- !u!1 &4511653777319607002
 GameObject:
   m_ObjectHideFlags: 0
@@ -1037,6 +1053,7 @@ GameObject:
   - component: {fileID: 8739410871712879611}
   - component: {fileID: 2397642513786644349}
   - component: {fileID: 120058442674962049}
+  - component: {fileID: 2512111372850854445}
   m_Layer: 5
   m_Name: PercentageField
   m_TagString: Untagged
@@ -1203,6 +1220,21 @@ MonoBehaviour:
   isAlert: 0
   m_InputValidator: {fileID: 0}
   m_ShouldActivateOnSelect: 1
+--- !u!114 &2512111372850854445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4511653777319607002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cae6c1ff04ba984f8f417d4966d1230, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floatingCanvasTarget: {fileID: 0}
+  dimmerPanel: {fileID: 0}
+  floatingPosition: {x: 0, y: 0}
 --- !u!1 &5028272217510233301
 GameObject:
   m_ObjectHideFlags: 0
@@ -1351,6 +1383,7 @@ GameObject:
   - component: {fileID: 5699391529217053739}
   - component: {fileID: 3474621950445465537}
   - component: {fileID: 2375014915060718658}
+  - component: {fileID: 5329778704755896835}
   m_Layer: 5
   m_Name: VolumeField
   m_TagString: Untagged
@@ -1517,6 +1550,21 @@ MonoBehaviour:
   isAlert: 0
   m_InputValidator: {fileID: 0}
   m_ShouldActivateOnSelect: 1
+--- !u!114 &5329778704755896835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5300696682854563870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cae6c1ff04ba984f8f417d4966d1230, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floatingCanvasTarget: {fileID: 0}
+  dimmerPanel: {fileID: 0}
+  floatingPosition: {x: 0, y: 0}
 --- !u!1 &5433733681641575107
 GameObject:
   m_ObjectHideFlags: 0

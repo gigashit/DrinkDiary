@@ -26,6 +26,8 @@ public class DrinkSelectorUI : MonoBehaviour
     public GameObject step1Object;
     public Button backFromCreationButton;
     public TMP_Text creationErrorText;
+    public GameObject inputFieldDimmer;
+    public RectTransform floatingCanvasTarget;
 
     [Header("Drink Creation Single Step Elements")]
     public GameObject step2noObject;
@@ -107,6 +109,18 @@ public class DrinkSelectorUI : MonoBehaviour
         IngredientEntry script = entry.GetComponent<IngredientEntry>();
         script.mainUIScript = mainUIScript;
         script.drinkSelectorUI = this;
+
+        FloatInputFieldToTop inputField = script.nameField.GetComponent<FloatInputFieldToTop>();
+        inputField.floatingCanvasTarget = floatingCanvasTarget;
+        inputField.dimmerPanel = inputFieldDimmer;
+
+        inputField = script.volumeField.GetComponent<FloatInputFieldToTop>();
+        inputField.floatingCanvasTarget = floatingCanvasTarget;
+        inputField.dimmerPanel = inputFieldDimmer;
+
+        inputField = script.percentageField.GetComponent<FloatInputFieldToTop>();
+        inputField.floatingCanvasTarget = floatingCanvasTarget;
+        inputField.dimmerPanel = inputFieldDimmer;
     }
 
     public void RemoveIngredientEntry(GameObject entry)

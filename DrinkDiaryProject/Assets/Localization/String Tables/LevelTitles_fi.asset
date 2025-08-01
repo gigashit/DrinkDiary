@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: LevelTitles_fi
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: fi
+  m_SharedData: {fileID: 11400000, guid: cbd1db13bdab4e94bbc5281a27881739, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 5053079552
+    m_Localized: Aloitteleva Juoppo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122468425728
+    m_Localized: Tavanomainen Tissuttelija
+    m_Metadata:
+      m_Items: []
+  - m_Id: 179536125952
+    m_Localized: "Lupaava L\xE4tr\xE4\xE4j\xE4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 247265746944
+    m_Localized: "Railakas Ryypp\xE4\xE4j\xE4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 301674258432
+    m_Localized: Kokenut Kaljoittelija
+    m_Metadata:
+      m_Items: []
+  - m_Id: 539675844608
+    m_Localized: Aikamoinen Alkoholisti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 653890936832
+    m_Localized: "Kunnon K\xE4nnikala"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 718596464640
+    m_Localized: Paatunut Pultsari
+    m_Metadata:
+      m_Items: []
+  - m_Id: 786745516032
+    m_Localized: "Legendaarinen \xD6rvelt\xE4j\xE4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 896418177024
+    m_Localized: Myyttinen Mallaskeisari
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

@@ -29,6 +29,13 @@ MonoBehaviour:
     - Locale-fi
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 90131c20195be26409401c3093fbd17d
+    m_Address: LevelTitles_fi
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fi
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a6bbf338f803fa94cabdb569f13e27b5
     m_Address: Buttons_fi
     m_ReadOnly: 1
